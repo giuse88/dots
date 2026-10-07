@@ -48,3 +48,12 @@ vim.api.nvim_create_autocmd("TextYankPost", {
         vim.hl.on_yank()
     end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "text", "markdown", "gitcommit" },
+    desc = "Spell checking for prose",
+    callback = function()
+        vim.opt_local.spell = true
+        vim.opt_local.spelllang = "en"
+    end,
+})

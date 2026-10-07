@@ -1,76 +1,54 @@
--- Send selected Python lines to an IPython terminal split (no plugins)
+-- Run Python in named IPython sessions sharing the right-hand pane (no plugins)
+local term = require("term")
 local M = {}
 
-local term = { buf = nil, chan = nil }
+M.last = nil -- name of the session code went to most recently
 
-local function is_running()
-    return term.chan ~= nil
-        and term.buf ~= nil
-        and vim.api.nvim_buf_is_valid(term.buf)
-        and vim.fn.jobwait({ term.chan }, 0)[1] == -1
-end
-
--- Terminal windows inherit list/number from options.lua, which looks wrong on a REPL
-local function style_win(win)
-    for opt, val in pairs({ number = false, relativenumber = false, list = false, signcolumn = "no", scrolloff = 0, winfixwidth = true }) do
-        vim.api.nvim_set_option_value(opt, val, { win = win, scope = "local" })
-    end
-    vim.api.nvim_win_set_width(win, math.floor(vim.o.columns * 0.4))
-end
-
-local function setup_term_buf(buf)
-    -- single <Esc> still belongs to IPython (history search, vi mode); <Esc><Esc> hands control back to nvim
-    vim.keymap.set("t", "<Esc><Esc>", [[<C-\><C-n>]], { buffer = buf, desc = "Back to normal mode" })
-    vim.keymap.set("t", "jj", [[<C-\><C-n>]], { buffer = buf, desc = "Back to normal mode" })
-    vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = buf, desc = "Hide IPython (session keeps running)" })
-    -- entering the pane lands in normal mode: scroll/search/yank output, press i to type in IPython
-    vim.api.nvim_create_autocmd("TermClose", {
-        buffer = buf,
-        desc = "Clean up after IPython exits",
-        callback = function()
-            term.chan, term.buf = nil, nil
-            local win = vim.fn.bufwinid(buf)
-            if win ~= -1 and #vim.api.nvim_list_wins() > 1 then
-                vim.api.nvim_win_close(win, true)
-            end
-            vim.schedule(function()
-                if vim.api.nvim_buf_is_valid(buf) then
-                    vim.api.nvim_buf_delete(buf, { force = true })
-                end
-            end)
-        end,
-    })
-end
-
--- Opens IPython in a right split (or re-shows it if its window was closed)
-function M.open()
-    local src_win = vim.api.nvim_get_current_win()
-    if is_running() then
-        if vim.fn.bufwinid(term.buf) == -1 then
-            vim.cmd("vertical rightbelow sbuffer " .. term.buf)
-            style_win(vim.api.nvim_get_current_win())
-            vim.api.nvim_set_current_win(src_win)
-        end
-        return true
-    end
-    if vim.fn.executable("ipython") == 0 then
-        vim.notify("ipython not found on PATH (activate your conda env first)", vim.log.levels.ERROR)
-        return false
-    end
-    vim.cmd("vertical rightbelow new")
-    term.chan = vim.fn.jobstart({ "ipython" }, { term = true })
-    term.buf = vim.api.nvim_get_current_buf()
-    style_win(vim.api.nvim_get_current_win())
-    setup_term_buf(term.buf)
-    vim.api.nvim_set_current_win(src_win)
-    -- wait for the first prompt, otherwise code sent now is echoed raw before IPython starts
+local function wait_for_prompt(session)
     vim.wait(10000, function()
-        for _, line in ipairs(vim.api.nvim_buf_get_lines(term.buf, 0, -1, false)) do
+        for _, line in ipairs(vim.api.nvim_buf_get_lines(session.buf, 0, -1, false)) do
             if line:match("^In %[") then return true end
         end
         return false
     end, 50)
-    return true
+end
+
+-- start a new IPython session; name defaults to ipython1, ipython2, ...
+function M.new(name)
+    if vim.fn.executable("ipython") == 0 then
+        vim.notify("ipython not found on PATH (activate your conda env first)", vim.log.levels.ERROR)
+        return nil
+    end
+    local session = term.create(name or term.next_name("ipython"), { "ipython" }, { kind = "ipython" })
+    wait_for_prompt(session)
+    M.last = session.name
+    return session
+end
+
+-- which session receives code: the one on screen, else the last one used, else the first
+local function target()
+    local visible = term.visible()
+    if visible and visible.kind == "ipython" then
+        return visible
+    end
+    if M.last and term.get(M.last) then
+        return term.get(M.last)
+    end
+    return term.list("ipython")[1]
+end
+
+-- :IPython [name] shows that session (creating it if needed)
+function M.open(name)
+    if name and name ~= "" then
+        local session = term.get(name)
+        return session and term.show(session) and session or M.new(name)
+    end
+    local session = target()
+    if session then
+        term.show(session)
+        return session
+    end
+    return M.new()
 end
 
 -- Removes the indentation shared by all non-blank lines
@@ -91,24 +69,38 @@ local function dedent(lines)
 end
 
 function M.send_lines(lines)
-    if not M.open() then return end
+    local session = target() or M.new()
+    if not session then return end
+    term.show(session)
+    M.last = session.name
     lines = dedent(lines)
     local text = table.concat(lines, "\n")
     if #lines > 1 then
         text = text .. "\n" -- blank line so IPython runs indented blocks
     end
     -- bracketed paste stops IPython from auto-indenting the pasted code
-    vim.api.nvim_chan_send(term.chan, "\27[200~" .. text .. "\27[201~\r")
-    local win = vim.fn.bufwinid(term.buf)
+    vim.api.nvim_chan_send(session.chan, "\27[200~" .. text .. "\27[201~\r")
+    local win = vim.fn.bufwinid(session.buf)
     if win ~= -1 then
-        vim.api.nvim_win_set_cursor(win, { vim.api.nvim_buf_line_count(term.buf), 0 })
+        vim.api.nvim_win_set_cursor(win, { vim.api.nvim_buf_line_count(session.buf), 0 })
     end
 end
 
+-- charwise (v) sends exactly what is highlighted; linewise (V) and block send whole lines
 function M.send_selection()
-    local first, last = vim.fn.line("v"), vim.fn.line(".")
-    if first > last then first, last = last, first end
-    local lines = vim.api.nvim_buf_get_lines(0, first - 1, last, false)
+    local charwise = vim.fn.mode() == "v"
+    local s, e = vim.fn.getpos("v"), vim.fn.getpos(".")
+    local srow, scol, erow, ecol = s[2], s[3], e[2], e[3]
+    if srow > erow or (srow == erow and scol > ecol) then
+        srow, scol, erow, ecol = erow, ecol, srow, scol
+    end
+    local lines
+    if charwise then
+        local last_len = #vim.fn.getline(erow)
+        lines = vim.api.nvim_buf_get_text(0, srow - 1, scol - 1, erow - 1, math.min(ecol, last_len), {})
+    else
+        lines = vim.api.nvim_buf_get_lines(0, srow - 1, erow, false)
+    end
     vim.api.nvim_feedkeys(vim.keycode("<Esc>"), "nx", false)
     M.send_lines(lines)
 end
@@ -120,14 +112,18 @@ function M.send_line_and_advance()
     vim.api.nvim_win_set_cursor(0, { math.min(row + 1, vim.api.nvim_buf_line_count(0)), 0 })
 end
 
-vim.api.nvim_create_user_command("IPython", function() M.open() end, { desc = "Open IPython in a right split" })
+vim.api.nvim_create_user_command("IPython", function(args) M.open(args.args) end,
+    { nargs = "?", desc = "Show an IPython session (by name), or open one" })
+vim.api.nvim_create_user_command("IPythonNew", function(args) M.new(args.args ~= "" and args.args or nil) end,
+    { nargs = "?", desc = "Start another IPython session" })
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "python",
     desc = "IPython send keymap",
     callback = function(args)
-        vim.keymap.set("x", "<leader>r", M.send_selection, { buffer = args.buf, desc = "Run selected lines in IPython" })
-        vim.keymap.set("x", "<leader><CR>", M.send_selection, { buffer = args.buf, desc = "Run selected lines in IPython" })
+        for _, lhs in ipairs({ "<leader><CR>", "<leader><leader>", "<leader>r" }) do
+            vim.keymap.set("x", lhs, M.send_selection, { buffer = args.buf, desc = "Run selection in IPython" })
+        end
         for _, lhs in ipairs({ "<leader><CR>", "<leader><leader>" }) do
             vim.keymap.set("n", lhs, M.send_line_and_advance, { buffer = args.buf, desc = "Run line in IPython, go to next line" })
         end
