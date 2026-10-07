@@ -7,6 +7,8 @@ vim.pack.add({
     { src = "https://github.com/neovim/nvim-lspconfig" }, -- language server configs (pyright, ...)
     -- release tags ship a prebuilt fuzzy matcher, so stay on 1.x tags
     { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") },
+    -- C-h/j/k/l move across nvim splits and tmux panes (pairs with tmux.conf)
+    { src = "https://github.com/christoomey/vim-tmux-navigator" },
 })
 
 -- ── Telescope: find and manage files ──────────────────────────────

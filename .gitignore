@@ -1,0 +1,4 @@
+# zsh runtime state (written by the shell, never commit)
+zsh/history
+zsh/zcompdump*
+zsh/.zcompdump*

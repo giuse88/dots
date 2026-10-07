@@ -1,6 +1,18 @@
 # ── Homebrew ───────────────────────────────────────────────────────
 # Sets PATH, HOMEBREW_PREFIX, MANPATH etc. (replaces the manual PATH line)
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# macOS: /opt/homebrew. Linux: Linuxbrew if present, otherwise none.
+for _brew in /opt/homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin/brew; do
+  [[ -x $_brew ]] && { eval "$($_brew shellenv)"; break }
+done
+unset _brew
+
+# Find a plugin script under Homebrew or the distro's /usr/share
+_zsh_plugin() {
+  local f
+  for f in "$HOMEBREW_PREFIX/share/$1/$1.zsh" "/usr/share/$1/$1.zsh"; do
+    [[ -r $f ]] && { source "$f"; return }
+  done
+}
 
 # ── History ────────────────────────────────────────────────────────
 ZSH_CONFIG_DIR="$HOME/.config/zsh"   # ~/.zshrc is a symlink to $ZSH_CONFIG_DIR/zshrc
@@ -21,7 +33,7 @@ setopt AUTO_PUSHD PUSHD_IGNORE_DUPS PUSHD_SILENT   # `cd -<TAB>` for recent dirs
 
 # ── Completion ─────────────────────────────────────────────────────
 # Homebrew-installed completions (git, brew, etc.)
-fpath=("$HOMEBREW_PREFIX/share/zsh/site-functions" $fpath)
+[[ -n $HOMEBREW_PREFIX ]] && fpath=("$HOMEBREW_PREFIX/share/zsh/site-functions" $fpath)
 autoload -Uz compinit
 # Only rebuild the completion cache once a day (faster startup)
 _zcompdump="$ZSH_CONFIG_DIR/zcompdump"
@@ -42,6 +54,7 @@ zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
+if [ -x /opt/miniconda3/bin/conda ]; then   # only on machines that have it
 __conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
@@ -53,8 +66,12 @@ else
     fi
 fi
 unset __conda_setup
-# <<< conda initialize <<<
 conda activate research
+fi
+# <<< conda initialize <<<
+
+# Linux machine: python venv instead of conda
+[ -f ~/pyenv/research/bin/activate ] && source ~/pyenv/research/bin/activate
 
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -62,12 +79,20 @@ export PATH="$HOME/.local/bin:$PATH"
 # -F appends a type marker: / = dir, * = executable, @ = symlink
 # -G / CLICOLOR colorises: dirs bold cyan, symlinks bold magenta,
 #   executables bold red (readable on Catppuccin Macchiato).
-export CLICOLOR=1
-export LSCOLORS='GxFxCxDxBxegedabagacad'
-alias ls='ls -FG'
-alias ll='ls -lhFG -D "%d %b %Y %H:%M"'
-alias la='ls -lAhFG -D "%d %b %Y %H:%M"'
-alias l='ls -CFG'
+if [[ $OSTYPE == darwin* ]]; then   # BSD ls
+  export CLICOLOR=1
+  export LSCOLORS='GxFxCxDxBxegedabagacad'
+  alias ls='ls -FG'
+  alias ll='ls -lhFG -D "%d %b %Y %H:%M"'
+  alias la='ls -lAhFG -D "%d %b %Y %H:%M"'
+  alias l='ls -CFG'
+else                               # GNU ls: same colours via LS_COLORS
+  export LS_COLORS='di=1;36:ln=1;35:so=1;32:pi=1;33:ex=1;31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43'
+  alias ls='ls -F --color=auto'
+  alias ll='ls -lhF --color=auto --time-style="+%d %b %Y %H:%M"'
+  alias la='ls -lAhF --color=auto --time-style="+%d %b %Y %H:%M"'
+  alias l='ls -CF --color=auto'
+fi
 
 # Colour for grep
 alias grep='grep --color=auto'
@@ -94,7 +119,7 @@ export FZF_DEFAULT_OPTS=" \
 --color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
 --color=marker:#b7bdf8,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796 \
 --color=selected-bg:#494d64"
-source <(fzf --zsh)
+(( $+commands[fzf] )) && source <(fzf --zsh)
 
 # ── zoxide: `z <partial-name>` to jump to directories ─────────────
 #eval "$(zoxide init zsh)"
@@ -126,10 +151,11 @@ _zsh_autosuggest_strategy_history_existing() {
   done
 }
 ZSH_AUTOSUGGEST_STRATEGY=(history_existing completion)
-source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+_zsh_plugin zsh-autosuggestions
 
 # ── Prompt: Starship (config in ~/.config/starship.toml) ─────────
-eval "$(starship init zsh)"
+(( $+commands[starship] )) && eval "$(starship init zsh)"
 
 # ── Syntax highlighting — must stay last ──────────────────────────
-source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+_zsh_plugin zsh-syntax-highlighting
+unfunction _zsh_plugin

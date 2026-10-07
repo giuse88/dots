@@ -28,11 +28,21 @@ for i = 1, 9 do
     vim.keymap.set("n", "<leader>" .. i, function() require("winbar").goto_index(i) end, { desc = "Go to winbar entry " .. i })
 end
 
--- window navigation without the <C-w> prefix
-vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to window below" })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to window above" })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
+-- window navigation without the <C-w> prefix: C-h/j/k/l come from
+-- vim-tmux-navigator (plugins.lua), which also crosses into tmux panes
+
+-- C-w w / C-w C-w: cycle windows; from the last window hop to the next tmux
+-- pane (tmux.conf's C-w w cycles back into nvim)
+local function cycle_window()
+    if vim.env.TMUX and vim.v.count == 0 and vim.fn.winnr() == vim.fn.winnr("$")
+        and tonumber(vim.fn.system({ "tmux", "display", "-p", "#{window_panes}" })) > 1 then
+        vim.fn.system({ "tmux", "select-pane", "-t", ":.+" })
+        return
+    end
+    vim.cmd((vim.v.count > 0 and vim.v.count or "") .. "wincmd w")
+end
+vim.keymap.set("n", "<C-w>w", cycle_window, { desc = "Next window / tmux pane" })
+vim.keymap.set("n", "<C-w><C-w>", cycle_window, { desc = "Next window / tmux pane" })
 
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines without moving cursor" })
 
