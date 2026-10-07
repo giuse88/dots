@@ -1,0 +1,58 @@
+autoload -Uz vcs_info
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' unstagedstr '*'
+zstyle ':vcs_info:git:*' stagedstr  '+'
+zstyle ':vcs_info:git:*' formats       ' %F{magenta}(%b%f%F{yellow}%u%c%f%F{magenta})%f'
+zstyle ':vcs_info:git:*' actionformats ' %F{magenta}(%b%f %F{red}%a%f%F{yellow}%u%c%f%F{magenta})%f'
+precmd() { vcs_info }
+
+setopt PROMPT_SUBST
+
+# conda / virtualenv segment (conda's own prefix is disabled via changeps1=false)
+_env_prompt() {
+  [[ -n $CONDA_DEFAULT_ENV ]] && echo "%F{green}${CONDA_DEFAULT_ENV}%f "
+  [[ -n $VIRTUAL_ENV ]]       && echo "%F{green}${VIRTUAL_ENV:t}%f "
+}
+
+# Line 1: env + path + git   |   Line 2: prompt char (green ok / red on error)
+PROMPT='$(_env_prompt)%F{blue}%~%f${vcs_info_msg_0_}
+%(?.%F{cyan}.%F{red})❯%f '
+
+export PATH="/opt/homebrew/bin:$PATH"
+
+# PYENV
+# eval "$(pyenv init -)"
+# if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/opt/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+conda activate research
+
+export PATH="$HOME/.local/bin:$PATH"
+
+# ── ls: make folders vs files obvious ──────────────────────────────
+# -F appends a type marker: / = dir, * = executable, @ = symlink
+# -G / CLICOLOR colorises: dirs bold cyan, symlinks bold magenta,
+#   executables bold red (readable on Catppuccin Macchiato).
+export CLICOLOR=1
+export LSCOLORS='GxFxCxDxBxegedabagacad'
+alias ls='ls -FG'
+alias ll='ls -lhFG'
+alias la='ls -lAhFG'
+alias l='ls -CFG'
+
+# Colour for grep
+alias grep='grep --color=auto'
+alias vim=nvim

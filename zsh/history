@@ -1,0 +1,477 @@
+: 1789247498:0;hit 
+: 1789247498:0;git commit -m 'update' 
+: 1789247498:0;sh database/fetch_db.sh 
+: 1789247498:0;git commit -m 'updatae'
+: 1789247498:0;mkdir janas
+: 1789247498:0;mv ChatGPT\ Image\ Feb\ 13,\ 2026,\ 09_20_* janas
+: 1789247498:0;cd janas
+: 1789247498:0;open /Users/giuseppepes/workspace/janas/index.html
+: 1789247498:0;./database/fetch_db.sh
+: 1789247498:0;rm research/claude/results/*.png
+: 1789247498:0;git checkout -b ff
+: 1789247498:0;    git push --set-upstream origin ff\
+ 
+: 1789247498:0;vim CLAUDE.md
+: 1789247498:0;vim .claude/settings.local.json
+: 1789247498:0;vim .claude/commands/research.md
+: 1789247498:0;/claude
+: 1789247498:0;gi gtpush
+: 1789247498:0;git commit 
+: 1789247498:0;git pulls
+: 1789247498:0;  python datafeed/hyperliquid/market_making/mr_mm_report.py -o ~/my_report.html   
+: 1789247498:0;mkdir store
+: 1789247498:0;cd store
+: 1789247498:0;rm position_comparison_*.png
+: 1789247498:0;cd datafeed/hyperliquid
+: 1789247498:0;cd market_making
+: 1789247498:0;rm ~
+: 1789247498:0;cd -
+: 1789247498:0;rm -rf "~"
+: 1789247498:0;git add.
+: 1789247498:0;git commit -m 'ddd'
+: 1789247498:0;git branch -b 
+: 1789247498:0;git checkout -b update-slow
+: 1789247498:0;gti commit -m update
+: 1789247498:0;git push -u origin update-slow
+: 1789247498:0;git merge update-slow
+: 1789247498:0; killall Dock 
+: 1789247498:0;python research/gp/live_trading/cost_report_janas.py 
+: 1789247498:0;monitoring
+: 1789247498:0;sardex-push /Users/giuseppepes/workspace/datafeed/research/gp/results/portfolio_combinations_binance.html 
+: 1789247498:0;sardex-push
+: 1789247498:0;scp -i ~/.secrets/dev-server.pem /Users/giuseppepes/workspace/datafeed/research/gp/results/portfolio_combinations_binance.html ubuntu@sardex2000.org:~/reports/research/signals/ 
+: 1789247498:0;scp -i ~/.secrets/dev-server.pem /Users/giuseppepes/workspace/datafeed/research/gp/results/all_momentum_binance.html  ubuntu@sardex2000.org:~/reports/research/signals/  
+: 1789247498:0;scp -i ~/.secrets/dev-server.pem /Users/giuseppepes/workspace/datafeed/research/gp/results/trend_max_expected_return_binplots_updated_binance.html  ubuntu@sardex2000.org:~/reports/research/signals/  
+: 1789247498:0;scp -i ~/.secrets/dev-server.pem /Users/giuseppepes/workspace/datafeed/research/gp/live_trading/results/janas_trend_cost_report.html  ubuntu@sardex2000.org:~/reports/research/signals/  
+: 1789247498:0;cd database
+: 1789247498:0;sh fetch_db.sh
+: 1789247498:0;git add ..
+: 1789247498:0;git commit -m 'up'
+: 1789247498:0;gitvpull
+: 1789247498:0;source ~/.bash_profile
+: 1789247498:0;pkill -9 python
+: 1789247498:0;pkill -9 java
+: 1789247498:0;gi tcommit -m 'udpate'
+: 1789247498:0;git commit -m 'updat'e
+: 1789247498:0;sh database/fetch_db.sh
+: 1789247498:0;gitpull
+: 1789247498:0;cd datafeed
+: 1789247498:0;git pull 
+: 1789247498:0;hto
+: 1789247498:0;gti add .
+: 1789247498:0;git statu
+: 1789247498:0;git pulll
+: 1789247498:0;git checkout -b binance
+: 1789247498:0; git push --set-upstream origin binance\
+ 
+: 1789247498:0;git satus
+: 1789247498:0;/bin/zsh /Users/giuseppepes/workspace/datafeed/database/fetch_db.sh
+: 1789247498:0;git merge binance
+: 1789247498:0;git checkout -h 
+: 1789247498:0;git checkout -b
+: 1789247498:0;git checkout -b mappings
+: 1789247498:0;git commit -m 'upate'
+: 1789247498:0;git push --set-upstream origin mappings\
+
+: 1789247498:0;git status 
+: 1789247498:0;git stash 
+: 1789247498:0;gitls
+: 1789247498:0;cp Downloads/gilts.pem .secrets/
+: 1789247498:0;l;s
+: 1789247498:0;./run_migration.sh
+: 1789247498:0;./update.sh
+: 1789247498:0;./monitor.sh
+: 1789247498:0;gilts
+: 1789247498:0;cat .bash_profile
+: 1789247498:0;chmod 600 /Users/giuseppes/.secrets/gilts.pem 
+: 1789247498:0;chmod 600 /Users/giuseppepes/.secrets/gilts.pem 
+: 1789247498:0;cd .secrets
+: 1789247498:0;curl -o global-bundle.pem https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem 
+: 1789247498:0;export RDSHOST="gilts.c120o0wqqwes.eu-west-2.rds.amazonaws.com" \
+psql "host=$RDSHOST port=5432 dbname=postgres user=giuseppe sslmode=verify-full sslrootcert=./global-bundle.pem" 
+: 1789247498:0;ssh -i ~/.secrets/gilts.pem -l ubuntu ec2-35-179-179-84.eu-west-2.compute.amazonaws.com
+: 1789247498:0;git dd .
+: 1789247498:0;./sync_live.sh
+: 1789247498:0;which research
+: 1789247498:0;which python
+: 1789247498:0;cat requirements.txt
+: 1789247498:0;pip install selenium 
+: 1789247498:0;pip install request
+: 1789247498:0;pip install requests
+: 1789247498:0;/bin/bash /Users/giuseppepes/workspace/gilts/run.sh
+: 1789247498:0;git commit -m 'udpate\
+'
+: 1789247498:0;git add 
+: 1789247498:0;claude 
+: 1789247498:0;gi status
+: 1789247498:0;git statys
+: 1789247498:0;git add /Users/giuseppepes/workspace/datafeed/datafeed/components/mappings/binance_hyper_mapping.csv 
+: 1789247498:0;git add -f /Users/giuseppepes/workspace/datafeed/datafeed/components/mappings/binance_hyper_mapping.csv 
+: 1789247498:0;git commit -m 'ud'
+: 1789247498:0;ssh -i ~/.secrets/dev-server.pem -l ubuntu sardex2000.org 
+: 1789247498:0;cd gilts
+: 1789247498:0;git checkout master
+: 1789247498:0;git commit -m 'all loaders'
+: 1789247498:0; git config pull.rebase false  # merge 
+: 1789247498:0;git commit -m 'update\
+'
+: 1789247498:0;ssh -i ~/.secrets/dev-server.pem -l ubuntu sardex2000.net 
+: 1789247498:0;ssh -i ~/.secrets/dev-server.pem -l ubuntu ec2-13-42-19-176.eu-west-2.compute.amazonaws.com 
+: 1789247498:0; 	ssh -i ~/.secrets/gilts.pem -l ubuntu ec2-35-179-179-84.eu-west-2.compute.amazonaws.com    
+: 1789247498:0;source .bash_profile
+: 1789247498:0;sardex
+: 1789247498:0;ssh -i ~/.secrets/dev-server.pem -l ubuntu ec2-13-40-119-37.eu-west-2.compute.amazonaws.com 
+: 1789247498:0;ssh -i ~/.secrets/dev-server.pem -l ubuntu sardex2000.net
+: 1789247498:0;ssh -i ~/.secrets/dev-server.pem -l ubuntu www.sardex2000.net
+: 1789247498:0;git checkout main 
+: 1789247498:0;pytest tests
+: 1789247498:0;claude git status
+: 1789247498:0;git commit -m 'udpate'
+: 1789247498:0;./database/fetch_live_datastore.sh
+: 1789247498:0;vim .gitignore
+: 1789247498:0;cd hbackfill
+: 1789247498:0;cd csv
+: 1789247498:0;vim 20230520.csv 
+: 1789247498:0;pwd
+: 1789247498:0;git checkout -b updated-loaders
+: 1789247498:0;\
+    git push --set-upstream origin updated-loaders 
+: 1789247498:0;git push 
+: 1789247498:0;git checkout main
+: 1789247498:0;git stash
+: 1789247498:0;git add  . 
+: 1789247498:0;git commit -m update'\
+'
+: 1789247498:0;resume --volume
+: 1789247498:0;claude --resume volume
+: 1789247498:0;git diff
+: 1789247498:0;git checkout -b update
+: 1789247498:0;git branch
+: 1789247498:0;git checkout  feature/giltdesk-webapp 
+: 1789247498:0;git commit -m update
+: 1789247498:0;    git push --set-upstream origin feature/giltdesk-webapp 
+: 1789247498:0;git merge origin/master
+: 1789247498:0;git merge origin master
+: 1789247498:0;git merge origin/main
+: 1789247498:0;git commit -m 'update'
+: 1789247498:0;htop
+: 1789247498:0;ssh -i ~/.secrets/dev-server.pem -l ubuntu sardex2000.org
+: 1789247498:0;brew install --cask ghostty 
+: 1789247498:0;brew cleanup
+: 1789247498:0;brew update
+: 1789247498:0;breaw upgrade
+: 1789247498:0;brew upgrade
+: 1789247498:0;brew purge
+: 1789247498:0;brew doctor
+: 1789247498:0;vim .vimrc
+: 1789247498:0;nvim init.vim
+: 1789247498:0;nvim lfu.py
+: 1789247498:0;slc
+: 1789247498:0;touch ~/.config/ghostty/config  -p
+: 1789247498:0;mkdir -p ~/.config/ghostty/
+: 1789247498:0;touch ~/.config/ghostty/config 
+: 1789247498:0;vim ~/.config/ghostty/config
+: 1789247498:0;nvim ~/.config
+: 1789247498:0;vim 
+: 1789247498:0;cd pwd
+: 1789247498:0;vim init.vim
+: 1789247498:0;rm -rf nvim
+: 1789247498:0;vim .bash_profile
+: 1789247498:0;rm java_error_in_pycharm.hprof
+: 1789247498:0;cd Untitled\ Folder
+: 1789247498:0;rmdir Untitled\ Folder
+: 1789247498:0;brew install --cask nikitabobko/tap/aerospace
+: 1789247498:0;la
+: 1789247498:0;chown +x Downloads
+: 1789247498:0;chown Giuseppe +x Downloads
+: 1789247498:0;chmod +x Downloads
+: 1789247498:0;sudo chmod +x Downloads
+: 1789247498:0;sudo sudo chmod +x Downloads
+: 1789247498:0;cd Downloads
+: 1789247498:0;mkdir aerospace
+: 1789247498:0;nvim aerospace.toml
+: 1789247498:0;nvim .config/aerospace/aerospace.toml
+: 1789247498:0;aerospace 
+: 1789247514:0;print -r -- "RESULT:$(fc -ln 1 2>/dev/null | wc -l | tr -d " "):$HISTFILE" > /private/tmp/claude-501/-Users-giuseppepes-workspace/832ef71b-7d9a-40d4-8612-3543708ac1e7/scratchpad/hist.out
+: 1789247830:0;{ print "ZDOTDIR=[${ZDOTDIR}]"; print "HISTFILE=$HISTFILE"; print "history loaded: $(fc -ln 1 2>/dev/null | wc -l | tr -d " ")"; print "starship=${+functions[prompt_starship_precmd]} autosuggest=${+functions[_zsh_autosuggest_start]} highlight=${+functions[_zsh_highlight]} zoxide=${+functions[z]}"; print "ctrl-r: $(bindkey "^R")"; print "$(alias vim)"; print "conda: $CONDA_DEFAULT_ENV"; } > /private/tmp/claude-501/-Users-giuseppepes-workspace/832ef71b-7d9a-40d4-8612-3543708ac1e7/scratchpad/verify.out 2>&1
+: 1789247966:0;cd workspace/
+: 1789248066:0;cd .config/ls
+: 1789248080:0;vim aerospace.toml
+: 1789248137:0;vim stefano
+: 1789248156:0;rm stefano treades.csv treades.xlsx
+: 1789248164:0;rm h.csv risk_model_report.html tf.html
+: 1789248217:0;rm dev_trading_report.html live_trading_report.html report.html
+: 1789248239:0;cler
+: 1789249086:0;clause
+: 1789249098:0;npm install claude
+: 1789249330:0;npm install -g claude
+: 1789249422:0;rm -rf /Applications/Claude.app
+: 1789249424:0;brew install claude
+: 1789249446:0;curl -fsSL https://claude.ai/install.sh | bash
+: 1789249481:0;vim .zshrc
+: 1789249499:0;zsh
+: 1789249814:0;rm Untitled.ipynb
+: 1789249991:0;rm data_backfill.html
+: 1789249998:0;rm package*
+: 1789250009:0;rm copy_db.sh
+: 1789250086:0;vim .config/starship.toml
+: 1789250171:0;cd .config/
+: 1789250176:0;mkdir nvim
+: 1789250358:0;mkdir lua
+: 1789250480:0;vim lua/options.lua
+: 1789250498:0;vim ~/.vimrc
+: 1789250541:0;vim init.lua
+: 1789250821:0;cat .vimrc
+: 1789250935:0;vim PriorityQueue.py
+: 1789251136:0;vim lfu.py
+: 1789251588:0;vim Trie.py
+: 1789251662:0;vim .config/aerospace/aerospace.toml
+: 1789251783:0;vim workspace/interview/interview2/prefix.py
+: 1789252468:0;ipython
+: 1789252895:0;nvim test
+: 1789252979:0;nvim test.py
+: 1789253015:0;claude --resume dot-files
+: 1789253080:0;rm test
+: 1789714696:0;exi
+: 1789752116:0;/exit
+: 1789763556:0;pkill -9 ghostty
+: 1789763579:0;nvim
+: 1789765586:0;aerospace
+: 1789765616:0;vim binanary_search.py
+: 1789766649:0;cd ~
+: 1789767036:0;eixt
+: 1789767526:0;vim workspace/interview/interview2/binanary_search.py
+: 1789813278:0;cat zsh/zshrc
+: 1789813281:0;:q
+: 1789813301:0;cd aerospace
+: 1789813309:0;cat starship.toml
+: 1789813322:0;cd ~/workspace
+: 1789813345:0;mkdir dots
+: 1789813396:0;echo "# dots" >> README.md\
+git init\
+git add README.md\
+git commit -m "first commit"\
+git branch -M main\
+git remote add origin git@github.com:giuse88/dots.git\
+git push -u origin main
+: 1789813453:0;cd dots
+: 1789813470:0;echo "# dots" >> README.md\
+
+: 1789813477:0;git init\
+git add README.md\
+git commit -m "first commit"\
+git branch -M main\
+git remote add origin git@github.com:giuse88/dots.git\
+git push -u origin main
+: 1789813550:0;git pull origin main
+: 1789813565:0;git fetch
+: 1789813582:0;gi tpush
+: 1789813590:0;git push --set-upstream origin main
+: 1789813634:0;git config pull.rebase false
+: 1789813651:0;git reset --hard origin main
+: 1789813656:0;git reset --hard main
+: 1789813659:0;gi tpull
+: 1789813781:0;git config user.email = giuse88@gmail.com
+: 1789813794:0;git push --force-with-lease origin main
+: 1789813800:0;git puoll
+: 1789813810:0;git pull
+: 1789813819:0;vim README.md
+: 1789813834:0;git commit -m 'init'
+: 1789813846:0;git commits
+: 1789813965:0;git rebase -i HEAD~3
+: 1789813971:0;git rebase -i HEAD~1
+: 1789814032:0;git rebase -i HEAD~2
+: 1789814060:0;git reset --soft HEAD~2
+: 1789814061:0;git reset --soft HEAD~1
+: 1789814071:0;git commit -m 'Init'
+: 1789814078:0;git push -f
+: 1789814085:0;git log
+: 1789814110:0;cp ~/.config/nvim .
+: 1789814116:0;cp -R ~/.config/nvim .
+: 1789814125:0;git add .
+: 1789814128:0;git commit -m 'NVIM'
+: 1789814133:0;git pushh
+: 1789814134:0;git push
+: 1790234049:0;vim reverse_word.py
+: 1790235062:0;vim heap.py
+: 1790235068:0;vim heap2.py
+: 1790520197:0;mkdir ai
+: 1790520239:0;\
+python3 -m venv .venv\
+source .venv/bin/activate\
+\
+python -m pip install pydantic-ai
+: 1790520299:0;o
+: 1790520941:0;cat ~/.claude
+: 1790521686:0;r
+: 1790522643:0;vim .env
+: 1790522683:0;vim weather.py
+: 1790522707:0;python weather
+: 1790522710:0;python weather.py
+: 1790577325:0;mkdir weather
+: 1790577332:0;mv weather.py weather
+: 1790577335:0;rm -rf .git
+: 1790577339:0;rm -rf __pycache__
+: 1790577352:0;mkdir rag
+: 1790577360:0;mkdir documents
+: 1790577363:0;cd documents
+: 1790577369:0;vim creadit_risk.txt
+: 1790577457:0;mv creadit_risk.txt ../pip.txt
+: 1790577460:0;vim pip.txt
+: 1790577475:0;python -m venv rag-demo\
+source rag-demo/bin/activate
+: 1790577493:0;pip install pip.txt
+: 1790577524:0;ls -la ..
+: 1790577530:0;cp ../.env .
+: 1790577545:0;mv .env env
+: 1790577547:0;vim ev
+: 1790577550:0;Ex
+: 1790577577:0;vim env
+: 1790577633:0;vm credit.txt documents
+: 1790627490:0;t
+: 1790627812:0;workon .venv/bin/activate
+: 1790627819:0;python .venv/bin/activate
+: 1790627876:0;cd rag
+: 1790627885:0;python rag-demo/bin/activate
+: 1790627906:0;python rag-demo
+: 1790627943:0;sh ./rag-demo/bin/activate
+: 1790627979:0;./rag-demo/bin/activate
+: 1790628006:0;. ./rag-demo/bin/activate
+: 1790628027:0;pip install -f
+: 1790628032:0;pip install -f pip.txt
+: 1790628037:0;pip install -r pip.txt
+: 1790628182:0;pip install --upgrade pip
+: 1790628230:0;python loader.py
+: 1790973891:0;cd workspace
+: 1790974000:0;cd interview/interview2
+: 1790975514:0;cd interview/
+: 1791024271:0;vim starship.toml
+: 1791024290:0;cd zsh
+: 1791024296:0;vim zshrc
+: 1791024314:0;cd backups
+: 1791024317:0;sl
+: 1791024323:0;vim zcompdump
+: 1791024333:0;vim history
+: 1791024357:0;cd coc
+: 1791024359:0;vim memos.json
+: 1791024366:0;cd btop
+: 1791024371:0;btop
+: 1791059560:0;cd ghostty
+: 1791059562:0;vm config
+: 1791059566:0;vim config
+: 1791060506:0;cd .con
+: 1791060880:0;cd workspace/interview/interview2
+: 1791061299:0;cd ~/.config/ls
+: 1791061301:0;cd ~/.config
+: 1791061302:0;;s
+: 1791061317:0;cd .config
+: 1791061324:0;cd nvim
+: 1791061326:0;git status
+: 1791061339:0;ls -la
+: 1791062154:0;vim
+: 1791062177:0;cd interview2
+: 1791062179:0;cd ai
+: 1791062184:0;vim rag
+: 1791062223:0;vim test.py
+: 1791062287:0;mkdir kernel
+: 1791062289:0;cd kernel
+: 1791062293:0;vim test.c
+: 1791062437:0;gcc test.c
+: 1791062439:0;./a.out
+: 1791062441:0;clear
+: 1791062491:0;cd ..
+: 1791062494:0;cd interview
+: 1791062495:0;cd ~/workspace/interview && claude --resume
+: 1791119883:0;cd workspace/interview
+: 1791119900:0;mkdir behavioral
+: 1791119902:0;cd behavioral
+: 1791120675:0;vim gr.txt
+: 1791120710:0;claude
+: 1791122373:0;ls
+: 1791122374:0;exit
+: 1791222694:0;cd ..
+: 1791222695:0;ls
+: 1791222696:0;cd ..
+: 1791222697:0;ls
+: 1791222705:0;mkdir c
+: 1791222706:0;ls
+: 1791222707:0;cd c
+: 1791222708:0;ls
+: 1791222716:0;vim hello.c
+: 1791222807:0;ls
+: 1791222811:0;./hello.out
+: 1791223763:0;ls
+: 1791223766:0;gcc stack.c
+: 1791223772:0;gcc stack.c -o stack.o
+: 1791223774:0;gcc stack.c -o stack.out
+: 1791223778:0;./stack.out
+: 1791223802:0;gcc stack.c -o stack.out
+: 1791223803:0;./stack.out
+: 1791223937:0;gcc stack.c -o stack.out
+: 1791224143:0;ls
+: 1791224148:0;rm -rf *.out
+: 1791224148:0;ls
+: 1791224152:0;rm -rf *.o
+: 1791224152:0;ls
+: 1791224155:0;./stack.out
+: 1791224157:0;gcc stack.c -o stack.out
+: 1791224161:0;./stack.out
+: 1791266509:0;cd ..
+: 1791266510:0;cd interview
+: 1791266510:0;ls
+: 1791266516:0;cd coding
+: 1791266516:0;ls
+: 1791266522:0;vim practice.py
+: 1791266528:0;vim practice2.py
+: 1791358013:0;ls
+: 1791358014:0;clear
+: 1791358014:0;cd ..
+: 1791358015:0;ls
+: 1791358016:0;cd ..
+: 1791358018:0;ls
+: 1791358023:0;cd ..
+: 1791358026:0;cd .config/ls
+: 1791358028:0;cd .config/
+: 1791358029:0;ls
+: 1791358043:0;cd vim
+: 1791358046:0;cd nvim
+: 1791358047:0;ls
+: 1791358049:0;gi tstatus
+: 1791358050:0;git status
+: 1791358052:0;ls
+: 1791358056:0;cd lua
+: 1791358057:0;ls
+: 1791358061:0;cd ..
+: 1791358066:0;cd workspace
+: 1791358067:0;ls
+: 1791358068:0;cd dots
+: 1791358069:0;ls
+: 1791358070:0;cd nvim
+: 1791358071:0;ls
+: 1791358073:0;git status
+: 1791358075:0;cd ..
+: 1791358075:0;ls
+: 1791358077:0;cd nvim
+: 1791358078:0;ls
+: 1791358080:0;cd lua
+: 1791358080:0;ls
+: 1791358082:0;cd ..
+: 1791358083:0;ls
+: 1791358086:0;cd ..
+: 1791358086:0;ls
+: 1791358108:0;cp -R ~/.config/nvim .
+: 1791358110:0;ls
+: 1791358113:0;cd nvim
+: 1791358114:0;ls
+: 1791358115:0;cd lua
+: 1791358116:0;ls
+: 1791358117:0;cd ..
+: 1791358119:0;ls
+: 1791358120:0;cd ..
+: 1791358121:0;ls
+: 1791358123:0;git status
+: 1791358126:0;git add .
+: 1791358129:0;git commit -m 'update'
+: 1791358130:0;git push
+: 1791358135:0;ls
+: 1791358160:0;cp -R ~/.config/zsh .
