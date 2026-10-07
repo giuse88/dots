@@ -1,0 +1,9 @@
+{
+  "alwaysThinkingEnabled": true,
+  "tui": "fullscreen",
+  "autoMemoryEnabled": true,
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline.sh"
+  }
+}
