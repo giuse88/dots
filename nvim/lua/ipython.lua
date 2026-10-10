@@ -121,12 +121,10 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = "python",
     desc = "IPython send keymap",
     callback = function(args)
-        for _, lhs in ipairs({ "<leader><CR>", "<leader><leader>", "<leader>r" }) do
+        for _, lhs in ipairs({ "<leader><CR>", "<leader>r" }) do
             vim.keymap.set("x", lhs, M.send_selection, { buffer = args.buf, desc = "Run selection in IPython" })
         end
-        for _, lhs in ipairs({ "<leader><CR>", "<leader><leader>" }) do
-            vim.keymap.set("n", lhs, M.send_line_and_advance, { buffer = args.buf, desc = "Run line in IPython, go to next line" })
-        end
+        vim.keymap.set("n", "<leader><CR>", M.send_line_and_advance, { buffer = args.buf, desc = "Run line in IPython, go to next line" })
     end,
 })
 

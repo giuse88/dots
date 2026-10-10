@@ -16,7 +16,14 @@ local telescope = require("telescope")
 telescope.setup({
     defaults = {
         layout_strategy = "flex",
-        file_ignore_patterns = { "%.git/", "%.claude/file%-history/", "node_modules/", "%.venv/", "__pycache__/", "%.zsh_sessions/" },
+        file_ignore_patterns = {
+            "%.git/", "%.claude/file%-history/", "node_modules/", "%.zsh_sessions/",
+            -- python: virtualenvs, bytecode, packaging and tool caches
+            "%.venv/", "^venv/", "/venv/", "__pycache__/", "%.py[cod]$",
+            "%.egg%-info/", "%.eggs/", "%.egg$", "%.whl$", "^build/", "^dist/",
+            "%.pytest_cache/", "%.mypy_cache/", "%.ruff_cache/", "%.tox/", "%.nox/",
+            "%.ipynb_checkpoints/", "htmlcov/", "%.coverage$",
+        },
     },
     pickers = { find_files = { hidden = true } }, -- dotfiles matter in ~/.config
     extensions = { file_browser = { grouped = true, hidden = true } },
