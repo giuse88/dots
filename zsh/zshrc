@@ -55,6 +55,11 @@ zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 if [ -x /opt/miniconda3/bin/conda ]; then   # only on machines that have it
+# Shells started by tmux inherit conda's variables, but macOS path_helper
+# (/etc/zprofile) has reordered PATH, so `conda activate` thinks the env is
+# already active and leaves /usr/bin first. Start from a clean slate.
+unset CONDA_SHLVL CONDA_PREFIX CONDA_DEFAULT_ENV CONDA_PROMPT_MODIFIER ${(M)${(k)parameters}:#CONDA_PREFIX_<->}
+path=(${path:#/opt/miniconda3/*})
 __conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
@@ -100,6 +105,19 @@ alias vim=nvim
 
 alias ..='cd ..'
 alias ...='cd ../..'
+
+# Homebrew GCC instead of Apple's clang shims: newest gcc-N installed
+if [[ $OSTYPE == darwin* && -n $HOMEBREW_PREFIX ]]; then
+  _gcc=($HOMEBREW_PREFIX/bin/gcc-<->(Nn))
+  if (( $#_gcc )); then
+    alias gcc=$_gcc[-1]
+    alias g++=${_gcc[-1]/gcc-/g++-}
+  fi
+  unset _gcc
+fi
+
+# Machine-specific settings (servers, keys): untracked, since this repo is public
+[[ -r $ZSH_CONFIG_DIR/local.zsh ]] && source "$ZSH_CONFIG_DIR/local.zsh"
 
 # ── Key bindings ───────────────────────────────────────────────────
 bindkey -e                                  # emacs-style line editing
